@@ -10,7 +10,7 @@ const App = () => {
             <img
               src={Images[0]}
               alt=""
-              className="w-10 h-20 bg-black object-contain"
+              className="w-10 h-20 object-contain"
             />
             <p className="font-bold text-4xl ml-2">Yiedie</p>
           </div>
