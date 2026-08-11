@@ -140,6 +140,7 @@ const Login = () => {
 
               <Button
                 variant={"secondary"}
+                onClick={() => window.location.href = "/home"}
                 className="mt-10 h-14 w-full rounded-2xl text-base text-white font-semibold bg-[#1900FF] hover:bg-[#1900ffa2]"
               >
                 Sign In
