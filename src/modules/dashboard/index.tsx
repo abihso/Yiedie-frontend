@@ -6,7 +6,8 @@ import LocationIcon from "@iconify-react/duo-icons/location";
 import { Button } from "@/components/ui/button";
 import { Images } from "../../assets/images";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import type {MouseEvent} from "react"
 import DashboardRoundedIcon from "@iconify-react/material-symbols/dashboard-rounded";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -16,12 +17,39 @@ import {
   AvatarImage,
   AvatarGroupCount,
 } from "@/components/ui/avatar";
-import { useState } from "react";
 import Camera16Icon from "@iconify-react/qlementine-icons/camera-16";
 
 const Dashboard = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [date, setDate] = useState<Date | undefined>(new Date());
+
+  // Mouse drag to scroll states
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftState, setScrollLeftState] = useState(0);
+
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeftState(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll-fast multiplier
+    scrollRef.current.scrollLeft = scrollLeftState - walk;
+  };
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -155,8 +183,14 @@ const Dashboard = () => {
         </div>
 
         <div
-          className="flex items-center gap-3 overflow-x-auto scrollbar-none px-2 py-1 w-full scroll-smooth [-webkit-overflow-scrolling:touch]"
+          className={`flex items-center gap-3 overflow-x-auto scrollbar-none px-2 py-1 w-full scroll-smooth [-webkit-overflow-scrolling:touch] select-none ${
+            isDragging ? "cursor-grabbing" : "cursor-grab"
+          }`}
           ref={scrollRef}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {[
@@ -173,7 +207,7 @@ const Dashboard = () => {
             <Button
               key={idx}
               variant="default"
-              className="shrink-0 h-12 w-48 rounded-2xl hover:bg-[#edebff98] bg-[#EDEBFF] text-black font-bold shadow-none"
+              className="shrink-0 h-12 w-48 rounded-2xl hover:bg-[#edebff98] bg-[#EDEBFF] text-black font-bold shadow-none pointer-events-none sm:pointer-events-auto"
             >
               {item}
             </Button>
