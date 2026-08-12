@@ -22,7 +22,7 @@ import Camera16Icon from "@iconify-react/qlementine-icons/camera-16";
 
 const Dashboard = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  // const [date, setDate] = useState<Date | undefined>(new Date());
 
   // Mouse drag to scroll states
   const [isDragging, setIsDragging] = useState(false);
