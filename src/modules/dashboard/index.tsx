@@ -9,7 +9,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import DashboardRoundedIcon from "@iconify-react/material-symbols/dashboard-rounded";
-import { Calendar } from "@/components/ui/calendar";
+// import { Calendar } from "@/components/ui/calendar";
+import Calendar from "../../components/calendar";
 import {
   Avatar,
   AvatarFallback,
@@ -449,12 +450,13 @@ const Dashboard = () => {
             ))}
           </div>
 
-          <Calendar
+          {/* <Calendar
             mode="single"
             selected={date}
             onSelect={setDate}
             className="bg-[#F0EFFC] min-h-80 border border-gray-200 w-full h-full shadow-sm rounded-2xl p-3 [&_.rdp-months]:w-full [&_.rdp-month]:w-full [&_.rdp-table]:w-full [&_.rdp-cell]:text-center"
-          />
+          /> */}
+          <Calendar />
         </div>
       </div>
     </div>
