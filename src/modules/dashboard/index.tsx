@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Images } from "../../assets/images";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
-import type {MouseEvent} from "react"
+import type { MouseEvent } from "react";
 import DashboardRoundedIcon from "@iconify-react/material-symbols/dashboard-rounded";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -233,7 +233,7 @@ const Dashboard = () => {
       </div>
 
       {/* Main Content Dashboard Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[70px_1fr_2fr_1fr] min-h-[50vh] px-3 sm:px-5 gap-3 my-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[70px_minmax(0,1fr)_minmax(0,2fr)_minmax(0,1.2fr)] min-h-[50vh] px-3 sm:px-5 gap-3 my-6 items-start">
         <div className="bg-[#0A0332] rounded-2xl min-h-17.5 lg:min-h-full"></div>
 
         {/* Messages Section */}
@@ -411,7 +411,7 @@ const Dashboard = () => {
         </div>
 
         {/* Reminders & Calendar Section */}
-        <div className="bg-white min-h-50 lg:min-h-full flex flex-col gap-6">
+        <div className="bg-white min-h-50 lg:min-h-full flex flex-col gap-6 w-full">
           <div className="py-3 px-4 sm:px-5 bg-[#F0EFFC] border border-gray-200 rounded-2xl">
             <div className="flex justify-between items-center">
               <p className="font-bold">Reminder</p>
@@ -449,14 +449,12 @@ const Dashboard = () => {
             ))}
           </div>
 
-          <div className="bg-[#F0EFFC] min-h-75 border border-gray-200 rounded-2xl p-2 sm:p-4 flex justify-center overflow-x-auto">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              className="rounded-2xl border w-full max-w-full bg-white shadow-sm"
-            />
-          </div>
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            className="bg-[#F0EFFC] min-h-80 border border-gray-200 w-full h-full shadow-sm rounded-2xl p-3 [&_.rdp-months]:w-full [&_.rdp-month]:w-full [&_.rdp-table]:w-full [&_.rdp-cell]:text-center"
+          />
         </div>
       </div>
     </div>
