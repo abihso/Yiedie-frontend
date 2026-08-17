@@ -430,8 +430,10 @@ const Dashboard = () => {
         {/* Messages Section */}
         <div className="bg-[#F0EFFC] rounded-2xl min-h-50 lg:min-h-full p-3 overflow-hidden">
           <div className="flex justify-between items-center">
-            <p className="font-bold">Messages</p>
-            <p className="text-xs cursor-pointer">View all</p>
+            <p className="font-bold text-xl text-[#0A0332]">Messages</p>
+            <p className="text-xs cursor-pointer font-bold text-[#1900FF]">
+              View all
+            </p>
           </div>
 
           {[...Array(8)].map((_, i) => (
@@ -496,7 +498,7 @@ const Dashboard = () => {
           <div className="rounded-2xl border border-gray-200 py-4 px-4 sm:px-8 bg-[#f0effc] mt-5 overflow-hidden">
             <div className="flex justify-between items-center mb-4">
               <p className="font-bold text-[#0A0332] text-2xl">Appointments</p>
-              <p className="text-xs cursor-pointer font-bold text-[#0A0332]">
+              <p className="text-xs cursor-pointer font-bold text-[#1900FF]">
                 View all
               </p>
             </div>
@@ -590,8 +592,10 @@ const Dashboard = () => {
         <div className="bg-white min-h-50 lg:min-h-full flex flex-col gap-6 w-full">
           <div className="py-3 px-4 sm:px-5 bg-[#F0EFFC] border border-gray-200 rounded-2xl">
             <div className="flex justify-between items-center">
-              <p className="font-bold">Reminder</p>
-              <p className="text-xs cursor-pointer">View all</p>
+              <p className="font-bold text-xl text-[#0A0332]">Reminder</p>
+              <p className="text-xs cursor-pointer font-bold text-[#1900FF]">
+                View all
+              </p>
             </div>
             {[...Array(3)].map((_, i) => (
               <div
