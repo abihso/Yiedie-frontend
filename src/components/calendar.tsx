@@ -117,12 +117,12 @@ export default function Calendar() {
       <Box
         sx={{
           width: 580,
-          backgroundColor: "#F5F5FA",
+          backgroundColor: "#f0effc",
           borderRadius: 4,
           overflow: "hidden",
           boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-          borderBottom: "4px solid #FA900A",
-          height: 460,
+          borderBottom: "4px solid #1900FF",
+          height: 380,
         }}
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>

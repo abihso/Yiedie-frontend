@@ -10,6 +10,7 @@ import { useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import DashboardRoundedIcon from "@iconify-react/material-symbols/dashboard-rounded";
 // import { Calendar } from "@/components/ui/calendar";
+import NetworkIcon from "@iconify-react/vadivam/network";
 import Calendar from "../../components/calendar";
 import {
   Avatar,
@@ -19,10 +20,22 @@ import {
   AvatarGroupCount,
 } from "@/components/ui/avatar";
 import Camera16Icon from "@iconify-react/qlementine-icons/camera-16";
+import UsersGroupIcon from "@iconify-react/mynaui/users-group";
+import DiscoverOutlinedIcon from "@iconify-react/weui/discover-outlined";
+import FeedLinearIcon from "@iconify-react/solar/feed-linear";
+import SaveIcon from "@iconify-react/reicon/save";
+import Task16Icon from "@iconify-react/qlementine-icons/task-16";
+import ScheduleIcon from "@iconify-react/akar-icons/schedule";
+import GoogleJournalIcon from "@iconify-react/arcticons/google-journal";
+import ResourcesIcon from "@iconify-react/grommet-icons/resources";
+import MessageRoundIcon from "@iconify-react/mage/message-round";
+import SettingIcon from "@iconify-react/uil/setting";
 
 const Dashboard = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  // const [date, setDate] = useState<Date | undefined>(new Date());
+
+  // State to track the currently active/hovered top nav tab, defaulting to "Dashboard-0"
+  const [activeTab, setActiveTab] = useState("Dashboard-0");
 
   // Mouse drag to scroll states
   const [isDragging, setIsDragging] = useState(false);
@@ -67,6 +80,8 @@ const Dashboard = () => {
     }
   };
 
+  const navItems = ["Dashboard", "Why Yiedie", "How it works", "Pricing"];
+
   return (
     <div className="min-h-screen bg-[#f8fafc] overflow-x-hidden">
       {/* Top Header Section */}
@@ -81,26 +96,29 @@ const Dashboard = () => {
                 className="w-10 h-10 object-contain"
               />
             </div>
-            <div className="border-t-4 border-[#1900FF] flex justify-center items-end h-full w-fit shrink-0">
-              <p className="font-bold bg-[#1900FF] py-1 px-2 rounded-b-lg text-white text-xs sm:text-sm">
-                Dashboard
-              </p>
-            </div>
-            <div className="border-t-4 border-transparent flex justify-center items-end h-full w-fit shrink-0">
-              <p className="font-bold py-1 px-2 rounded-b-lg text-[#0C0332] text-xs sm:text-sm">
-                Why Yiedie
-              </p>
-            </div>
-            <div className="border-t-4 border-transparent flex justify-center items-end h-full w-fit shrink-0">
-              <p className="font-bold py-1 px-2 rounded-b-lg text-[#0C0332] text-xs sm:text-sm">
-                How it works
-              </p>
-            </div>
-            <div className="border-t-4 border-transparent flex justify-center items-end h-full w-fit shrink-0">
-              <p className="font-bold py-1 px-2 rounded-b-lg text-[#0C0332] text-xs sm:text-sm">
-                Dashboard
-              </p>
-            </div>
+
+            {/* Dynamic Navigation Tabs */}
+            {navItems.map((item, index) => {
+              const isActive = activeTab === `${item}-${index}`;
+              return (
+                <div
+                  key={index}
+                  onMouseEnter={() => setActiveTab(`${item}-${index}`)}
+                  onClick={() => setActiveTab(`${item}-${index}`)}
+                  className={`border-t-4 transition-colors flex justify-center items-end h-full w-fit shrink-0 cursor-pointer ${
+                    isActive ? "border-[#A8A8AD]" : "border-transparent"
+                  }`}
+                >
+                  <p
+                    className={`font-bold py-1 px-2 rounded-b-lg transition-colors text-xs sm:text-sm ${
+                      isActive ? "bg-[#A8A8AD] text-white" : "text-[#0C0332]"
+                    }`}
+                  >
+                    {item}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
           {/* Right Notifications and Profile */}
@@ -127,7 +145,7 @@ const Dashboard = () => {
 
         {/* Hero Search Area */}
         <div className="mt-16 sm:mt-18">
-          <p className="text-[#0C0332] font-bold text-xl sm:text-2xl">
+          <p className="text-[#0C0332] font-bold text-xl sm:text-3xl">
             Find a perfect and professional counselor
           </p>
           <div className="bg-white h-auto rounded-3xl sm:rounded-full mt-2 px-3 py-3 sm:py-2 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
@@ -203,12 +221,11 @@ const Dashboard = () => {
             "Career",
             "Career",
             "Family",
-            "Family",
           ].map((item, idx) => (
             <Button
               key={idx}
               variant="default"
-              className="shrink-0 h-12 w-48 rounded-2xl hover:bg-[#edebff98] bg-[#EDEBFF] text-black font-bold shadow-none pointer-events-none sm:pointer-events-auto"
+              className="shrink-0 h-15 w-48 border border-[#A19EFF] rounded-2xl hover:bg-[#edebff98] bg-[#EDEBFF] text-black font-bold shadow-none pointer-events-none sm:pointer-events-auto"
             >
               {item}
             </Button>
@@ -235,7 +252,180 @@ const Dashboard = () => {
 
       {/* Main Content Dashboard Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[70px_minmax(0,1fr)_minmax(0,2fr)_minmax(0,1.2fr)] min-h-[50vh] px-3 sm:px-5 gap-3 my-6 items-start">
-        <div className="bg-[#0A0332] rounded-2xl min-h-17.5 lg:min-h-full"></div>
+        {/* Left Sidebar Icon/Label Column with Group Hover Tooltips */}
+        <div className="relative flex flex-col gap-3 py-5 bg-[#f3f6ff] border border-[#c1c1ff] rounded-2xl min-h-17.5 lg:min-h-full items-center">
+          {/* Counselors */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <UsersGroupIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Counselors
+                </p>
+              </div>
+            </div>
+          </button>
+
+          {/* Organisation */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <NetworkIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Organisation
+                </p>
+              </div>
+            </div>
+          </button>
+
+          <div className="border border-[#DEDEDE] my-1 w-[80%]"></div>
+
+          {/* Discover */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <DiscoverOutlinedIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Discover
+                </p>
+              </div>
+            </div>
+          </button>
+
+          {/* Feeds */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <FeedLinearIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Feeds
+                </p>
+              </div>
+            </div>
+          </button>
+
+          {/* Saved */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <SaveIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Saved
+                </p>
+              </div>
+            </div>
+          </button>
+
+          <div className="border border-[#DEDEDE] my-1 w-[80%]"></div>
+
+          {/* Message */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <MessageRoundIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Message
+                </p>
+              </div>
+            </div>
+          </button>
+
+          {/* My Journals */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <GoogleJournalIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  My Journals
+                </p>
+              </div>
+            </div>
+          </button>
+
+          {/* Resources */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <ResourcesIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Resources
+                </p>
+              </div>
+            </div>
+          </button>
+
+          <div className="border border-[#DEDEDE] my-1 w-[80%]"></div>
+
+          {/* Schedule */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <ScheduleIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Schedule
+                </p>
+              </div>
+            </div>
+          </button>
+
+          {/* Task */}
+          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <Task16Icon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Task
+                </p>
+              </div>
+            </div>
+          </button>
+
+          <div className="border border-[#DEDEDE] my-1 w-[80%]"></div>
+          {/* Settings */}
+          <button className="absolute bottom-5 group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+            <SettingIcon
+              height="1em"
+              className="text-4xl text-[#aabfe1] shrink-0"
+            />
+            <div className="absolute z-10 left-16 h-10 w-32 pl-4 items-center justify-start hidden group-hover:flex">
+              <div className="h-10 w-25 bg-[#0A0332] py-2 px-4 rounded-lg flex items-center justify-center shadow-md relative before:content-[''] before:absolute before:right-full before:top-1/2 before:-translate-y-1/2 before:border-[6px] before:border-transparent before:border-r-[#0A0332]">
+                <p className="text-white font-bold text-sm tracking-tight whitespace-nowrap">
+                  Settings
+                </p>
+              </div>
+            </div>
+          </button>
+        </div>
 
         {/* Messages Section */}
         <div className="bg-[#F0EFFC] rounded-2xl min-h-50 lg:min-h-full p-3 overflow-hidden">
@@ -243,24 +433,7 @@ const Dashboard = () => {
             <p className="font-bold">Messages</p>
             <p className="text-xs cursor-pointer">View all</p>
           </div>
-          <div className="bg-[#0A0332] h-14 rounded-full p-2 mt-3 flex justify-between items-center gap-3">
-            <Avatar className={"h-10 w-10 shrink-0"}>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
 
-            <div className="w-full overflow-hidden">
-              <p className="text-white text-sm truncate">
-                Mr. Godfred Kusi (mentor)
-              </p>
-              <p className="text-white text-xs truncate">
-                Mr. Godfred Kusi (mentor)
-              </p>
-            </div>
-            <Button className={"bg-white rounded-full h-9 w-9 shrink-0"}>
-              <ChevronRight className="text-black" />
-            </Button>
-          </div>
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
@@ -322,8 +495,10 @@ const Dashboard = () => {
 
           <div className="rounded-2xl border border-gray-200 py-4 px-4 sm:px-8 bg-[#f0effc] mt-5 overflow-hidden">
             <div className="flex justify-between items-center mb-4">
-              <p className="font-bold">Appointments</p>
-              <p className="text-xs cursor-pointer">View all</p>
+              <p className="font-bold text-[#0A0332] text-2xl">Appointments</p>
+              <p className="text-xs cursor-pointer font-bold text-[#0A0332]">
+                View all
+              </p>
             </div>
 
             {/* Appointment item 1 */}
@@ -425,7 +600,7 @@ const Dashboard = () => {
               >
                 <div className="w-12 sm:w-20 shrink-0 flex justify-center">
                   <div className="w-10 h-10 rounded-full flex justify-center items-center bg-[#FF9001]">
-                    <NotificationFillIcon className="h-6 text-white" />
+                    <NotificationFillIcon className="h-6 " />
                   </div>
                 </div>
                 <div className="flex w-full justify-start overflow-hidden">
@@ -450,13 +625,14 @@ const Dashboard = () => {
             ))}
           </div>
 
-          {/* <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            className="bg-[#F0EFFC] min-h-80 border border-gray-200 w-full h-full shadow-sm rounded-2xl p-3 [&_.rdp-months]:w-full [&_.rdp-month]:w-full [&_.rdp-table]:w-full [&_.rdp-cell]:text-center"
-          /> */}
           <Calendar />
+          <Button
+            className={
+              "font-bold bg-[#1900FF] hover:bg-[#1900FF] h-20 -mt-10 rounded-t-none rounded-b-3xl hover:text-2xl text-3xl"
+            }
+          >
+            Book Appointment
+          </Button>
         </div>
       </div>
     </div>
