@@ -7,6 +7,7 @@ import Login from './modules/Auth/index.tsx';
 import Register from './modules/Auth/register.tsx';
 import ForgotPassword from './modules/Auth/forget-password.tsx';
 import Dashboard from './modules/dashboard/index.tsx';
+import Discover from './modules/dashboard/tabs/discover.tsx';
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Dashboard />} />
         <Route path="/forget-password" element={<ForgotPassword />} />
+        <Route path="/dashboard/discovery" element={<Discover />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

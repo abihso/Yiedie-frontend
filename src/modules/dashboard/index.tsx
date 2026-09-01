@@ -287,7 +287,7 @@ const Dashboard = () => {
           <div className="border border-[#DEDEDE] my-1 w-[80%]"></div>
 
           {/* Discover */}
-          <button className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
+          <button onClick={() => window.location.href = "/dashboard/discovery"} className="relative group flex items-center justify-center w-full h-10 px-3 cursor-pointer bg-transparent border-none">
             <DiscoverOutlinedIcon
               height="1em"
               className="text-4xl text-[#aabfe1] shrink-0"

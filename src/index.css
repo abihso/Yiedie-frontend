@@ -134,3 +134,7 @@ body {
     @apply font-sans;
   }
 }
+
+.text-color1{
+  color: #0A0332;
+}
