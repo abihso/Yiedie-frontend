@@ -3,7 +3,7 @@ import Yiedie1 from "./Yiedie.png";
 import mail from "./email.png";
 import jijo from "./jijo.jpg";
 import m1 from "./How To Lead A Successful Marriage_ Tips For A Fulfilling Relationship.jpeg";
-import m2 from "./smiling-asian-woman-makes-phone-call-girl-student-using-laptop-mobile-phone-talking-someone.jpg";
+import m2 from "./woman-making-call.jpg";
 import m3 from "./What to Expect in Marriage Counseling_ Breaking Down the Myths and Fears.jpeg";
 import m4 from "./A friendly doctorpatient consultation _ Premium AI-generated image.jpeg";
 import m5 from "./30 Marriage Prayers and Blessings for a Strong Relationship.jpeg";
