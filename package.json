@@ -45,6 +45,7 @@
     "@iconify-react/uil": "^1.0.2",
     "@iconify-react/vadivam": "^1.0.0",
     "@iconify-react/weui": "^1.0.2",
+    "@iconify/react": "^6.0.2",
     "@mui/icons-material": "^9.3.1",
     "@mui/material": "^9.3.1",
     "@mui/x-date-pickers": "^9.11.0",
