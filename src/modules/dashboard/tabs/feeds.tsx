@@ -41,10 +41,16 @@ const Feeds = () => {
     { label: "recent", value: "Recent" },
     { label: "last-week", value: "Last-week" },
   ];
+
+  // Class string for independent scrolling with invisible scrollbar
+  const scrollableColumnClass =
+    "h-full overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden";
+
   return (
-    <div className="min-h-screen p-2 sm:p-4">
-      {/* Header */}
-      <div className="relative flex flex-col sm:flex-row justify-center items-center gap-2 mb-3">
+    // Fixed viewport container to prevent overall window scrolling
+    <div className="h-screen flex flex-col p-2 sm:p-4 overflow-hidden">
+      {/* Fixed Header */}
+      <div className="relative flex flex-col sm:flex-row justify-center items-center gap-2 mb-3 shrink-0">
         <p className="static sm:absolute sm:left-3 font-bold text-lg">Feeds</p>
         <div className="flex gap-4 sm:gap-2">
           {["For you", "Following", "Latest", "Live"].map((tab) => (
@@ -58,12 +64,14 @@ const Feeds = () => {
         </div>
       </div>
 
-      {/* Main Container */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 mt-3 gap-3">
-        {/* Left Side & Main Content Container */}
-        <div className="lg:col-span-10 grid grid-cols-1 lg:grid-cols-12 gap-3">
-          {/* Left Sidebar */}
-          <div className="lg:col-span-2 space-y-4">
+      {/* Main Column Grid Container */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 flex-1 overflow-hidden">
+        {/* Left Side & Main Content Wrapper */}
+        <div className="lg:col-span-10 grid grid-cols-1 lg:grid-cols-12 gap-3 h-full overflow-hidden">
+          {/* 1. LEFT SIDEBAR (Scrolls independently) */}
+          <div
+            className={`lg:col-span-3 space-y-4 pr-1 ${scrollableColumnClass}`}
+          >
             {/* User Profile Card */}
             <div className="bg-color1 border border-color1 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
               <div className="w-full flex flex-col relative pb-2 group cursor-pointer">
@@ -168,10 +176,12 @@ const Feeds = () => {
             </div>
           </div>
 
-          {/* Main Feed Box */}
-          <div className="lg:col-span-10 flex flex-col gap-4">
+          {/* 2. MAIN FEED CONTENT (Scrolls independently) */}
+          <div
+            className={`lg:col-span-9 flex flex-col gap-4 pr-1 ${scrollableColumnClass}`}
+          >
             {/* Create Post Widget */}
-            <div className="min-h-[5rem] border rounded-2xl border-color1 py-2 px-3 sm:px-5 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
+            <div className="min-h-20 border rounded-2xl border-color1 py-2 px-3 sm:px-5 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 shrink-0">
               <div className="flex items-center gap-2 sm:gap-4 rounded-2xl">
                 <Avatar className="h-8 w-8 shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer">
                   <AvatarImage src="https://github.com/shadcn.png" />
@@ -231,7 +241,7 @@ const Feeds = () => {
             </div>
 
             {/* Filter / Sort Row */}
-            <div className="flex justify-between items-center gap-2">
+            <div className="flex justify-between items-center gap-2 shrink-0">
               <div className="border-b w-full border-color1" />
               <div className="shrink-0">
                 <Select items={sort}>
@@ -254,318 +264,121 @@ const Feeds = () => {
               </div>
             </div>
 
-            {/* Feed Items */}
-            {/* Post 1 */}
-            <div className="min-h-56 rounded-2xl border border-color1 px-3 py-4 space-y-3 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-              <div className="flex justify-between items-start gap-2">
-                <div className="flex gap-3">
+            {/* Feed Posts */}
+            {[Images[4], null, Images[8]].map((imgSrc, idx) => (
+              <div
+                key={idx}
+                className="min-h-44 rounded-2xl border border-color1 px-3 py-4 space-y-3 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 shrink-0"
+              >
+                <div className="flex justify-between items-start gap-2">
+                  <div className="flex gap-3">
+                    <Avatar className="h-8 w-8 shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="text-xs font-semibold">
+                        Mr. Godfred Kusi (mentor){" "}
+                        <span className="text-[10px] text-[#656565] font-normal">
+                          @Godey 41 min ago
+                        </span>
+                      </p>
+                      <p className="text-xs mt-2">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Pariatur mollitia, perspiciatis tempora amet optio iusto
+                        reiciendis ipsum ad earum ipsa.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="shrink-0 p-1 rounded-full transition-transform duration-200 hover:scale-125 active:scale-90 hover:bg-black/5 dark:hover:bg-white/5">
+                    <ThreeDotsIcon height="1em" className="cursor-pointer" />
+                  </div>
+                </div>
+
+                {imgSrc && (
+                  <div className="overflow-hidden rounded-xl mt-3">
+                    <img
+                      src={imgSrc}
+                      className="h-48 w-full object-cover rounded-xl transition-transform duration-500 hover:scale-105 cursor-pointer"
+                      alt=""
+                    />
+                  </div>
+                )}
+
+                <div className="h-10 flex flex-wrap gap-4 sm:gap-6 items-center">
+                  <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
+                    <LikeIcon
+                      height="1em"
+                      color="red"
+                      className="transition-transform duration-200 group-hover:scale-125"
+                    />
+                    <p className="text-[10px] font-bold transition-colors group-hover:text-red-500">
+                      22K
+                    </p>
+                  </div>
+                  <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
+                    <MessageRoundIcon
+                      height="1em"
+                      className="transition-transform duration-200 group-hover:scale-125"
+                    />
+                    <p className="text-[10px] font-bold transition-colors group-hover:text-blue-500">
+                      22K
+                    </p>
+                  </div>
+                  <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
+                    <RepostIcon
+                      height="1em"
+                      className="transition-transform duration-200 group-hover:scale-125"
+                    />
+                    <p className="text-[10px] font-bold transition-colors group-hover:text-green-500">
+                      22K
+                    </p>
+                  </div>
+                  <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
+                    <SaveAddIcon
+                      height="1em"
+                      className="transition-transform duration-200 group-hover:scale-125"
+                    />
+                    <p className="text-[10px] font-bold transition-colors group-hover:text-yellow-500">
+                      22K
+                    </p>
+                  </div>
+                  <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
+                    <ShareOutlineIcon
+                      height="1em"
+                      className="transition-transform duration-200 group-hover:scale-125"
+                    />
+                    <p className="text-[10px] font-bold transition-colors group-hover:text-purple-500">
+                      22K
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 items-center">
                   <Avatar className="h-8 w-8 shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer">
                     <AvatarImage src="https://github.com/shadcn.png" />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
-                  <div>
-                    <p className="text-xs font-semibold">
-                      Mr. Godfred Kusi (mentor){" "}
-                      <span className="text-[10px] text-[#656565] font-normal">
-                        @Godey 41 min ago
-                      </span>
-                    </p>
-                    <p className="text-xs mt-2">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Pariatur mollitia, perspiciatis tempora amet optio iusto
-                      reiciendis ipsum ad earum ipsa. Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Pariatur mollitia,
-                      perspiciatis tempora amet optio iusto reiciendis ipsum ad
-                      earum ipsa.
-                    </p>
+                  <div className="w-full relative">
+                    <input
+                      className="bg-[#DCDFE5] h-9 w-full rounded-2xl text-xs text-[#656565] flex items-center pl-4 pr-9 outline-none transition-all duration-200 focus:ring-2 focus:ring-[#1900FF]/40 focus:bg-white"
+                      placeholder="Write a comment"
+                    />
+                    <EmojiDuotoneIcon
+                      height="1em"
+                      className="absolute right-3 top-2.5 cursor-pointer transition-transform duration-200 hover:scale-125 hover:rotate-12 active:scale-90"
+                    />
                   </div>
                 </div>
-                <div className="shrink-0 p-1 rounded-full transition-transform duration-200 hover:scale-125 active:scale-90 hover:bg-black/5 dark:hover:bg-white/5">
-                  <ThreeDotsIcon height="1em" className="cursor-pointer" />
-                </div>
               </div>
-
-              <div className="overflow-hidden rounded-xl mt-3">
-                <img
-                  src={Images[4]}
-                  className="h-48 w-full object-cover rounded-xl transition-transform duration-500 hover:scale-105 cursor-pointer"
-                  alt=""
-                />
-              </div>
-
-              <div className="h-10 flex flex-wrap gap-4 sm:gap-6 items-center">
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <LikeIcon
-                    height="1em"
-                    color="red"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-red-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <MessageRoundIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-blue-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <RepostIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-green-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <SaveAddIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-yellow-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <ShareOutlineIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-purple-500">
-                    22K
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-3 items-center">
-                <Avatar className="h-8 w-8 shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div className="w-full relative">
-                  <input
-                    className="bg-[#DCDFE5] h-9 w-full rounded-2xl text-xs text-[#656565] flex items-center pl-4 pr-9 outline-none transition-all duration-200 focus:ring-2 focus:ring-[#1900FF]/40 focus:bg-white"
-                    placeholder="Write a comment"
-                  />
-                  <EmojiDuotoneIcon
-                    height="1em"
-                    className="absolute right-3 top-2.5 cursor-pointer transition-transform duration-200 hover:scale-125 hover:rotate-12 active:scale-90"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Post 2 (Text only) */}
-            <div className="min-h-44 rounded-2xl border border-color1 px-3 py-4 space-y-3 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-              <div className="flex justify-between items-start gap-2">
-                <div className="flex gap-3">
-                  <Avatar className="h-8 w-8 shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer">
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-xs font-semibold">
-                      Mr. Godfred Kusi (mentor){" "}
-                      <span className="text-[10px] text-[#656565] font-normal">
-                        @Godey 41 min ago
-                      </span>
-                    </p>
-                    <p className="text-xs mt-2">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Pariatur mollitia, perspiciatis tempora amet optio iusto
-                      reiciendis ipsum ad earum ipsa. Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Pariatur mollitia,
-                      perspiciatis tempora amet optio iusto reiciendis ipsum ad
-                      earum ipsa.
-                    </p>
-                  </div>
-                </div>
-                <div className="shrink-0 p-1 rounded-full transition-transform duration-200 hover:scale-125 active:scale-90 hover:bg-black/5 dark:hover:bg-white/5">
-                  <ThreeDotsIcon height="1em" className="cursor-pointer" />
-                </div>
-              </div>
-
-              <div className="h-10 flex flex-wrap gap-4 sm:gap-6 items-center">
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <LikeIcon
-                    height="1em"
-                    color="red"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-red-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <MessageRoundIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-blue-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <RepostIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-green-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <SaveAddIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-yellow-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <ShareOutlineIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-purple-500">
-                    22K
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-3 items-center">
-                <Avatar className="h-8 w-8 shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div className="w-full relative">
-                  <input
-                    className="bg-[#DCDFE5] h-9 w-full rounded-2xl text-xs text-[#656565] flex items-center pl-4 pr-9 outline-none transition-all duration-200 focus:ring-2 focus:ring-[#1900FF]/40 focus:bg-white"
-                    placeholder="Write a comment"
-                  />
-                  <EmojiDuotoneIcon
-                    height="1em"
-                    className="absolute right-3 top-2.5 cursor-pointer transition-transform duration-200 hover:scale-125 hover:rotate-12 active:scale-90"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Post 3 */}
-            <div className="min-h-56 rounded-2xl border border-color1 px-3 py-4 space-y-3 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-              <div className="flex justify-between items-start gap-2">
-                <div className="flex gap-3">
-                  <Avatar className="h-8 w-8 shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer">
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-xs font-semibold">
-                      Mr. Godfred Kusi (mentor){" "}
-                      <span className="text-[10px] text-[#656565] font-normal">
-                        @Godey 41 min ago
-                      </span>
-                    </p>
-                    <p className="text-xs mt-2">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Pariatur mollitia, perspiciatis tempora amet optio iusto
-                      reiciendis ipsum ad earum ipsa. Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Pariatur mollitia,
-                      perspiciatis tempora amet optio iusto reiciendis ipsum ad
-                      earum ipsa.
-                    </p>
-                  </div>
-                </div>
-                <div className="shrink-0 p-1 rounded-full transition-transform duration-200 hover:scale-125 active:scale-90 hover:bg-black/5 dark:hover:bg-white/5">
-                  <ThreeDotsIcon height="1em" className="cursor-pointer" />
-                </div>
-              </div>
-
-              <div className="overflow-hidden rounded-xl mt-3">
-                <img
-                  src={Images[8]}
-                  className="h-48 w-full object-cover rounded-xl transition-transform duration-500 hover:scale-105 cursor-pointer"
-                  alt=""
-                />
-              </div>
-
-              <div className="h-10 flex flex-wrap gap-4 sm:gap-6 items-center">
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <LikeIcon
-                    height="1em"
-                    color="red"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-red-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <MessageRoundIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-blue-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <RepostIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-green-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <SaveAddIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-yellow-500">
-                    22K
-                  </p>
-                </div>
-                <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
-                  <ShareOutlineIcon
-                    height="1em"
-                    className="transition-transform duration-200 group-hover:scale-125"
-                  />
-                  <p className="text-[10px] font-bold transition-colors group-hover:text-purple-500">
-                    22K
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-3 items-center">
-                <Avatar className="h-8 w-8 shrink-0 transition-transform duration-200 hover:scale-110 cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div className="w-full relative">
-                  <input
-                    className="bg-[#DCDFE5] h-9 w-full rounded-2xl text-xs text-[#656565] flex items-center pl-4 pr-9 outline-none transition-all duration-200 focus:ring-2 focus:ring-[#1900FF]/40 focus:bg-white"
-                    placeholder="Write a comment"
-                  />
-                  <EmojiDuotoneIcon
-                    height="1em"
-                    className="absolute right-3 top-2.5 cursor-pointer transition-transform duration-200 hover:scale-125 hover:rotate-12 active:scale-90"
-                  />
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Right Sidebar */}
-        <div className="lg:col-span-2 space-y-4">
+        {/* 3. RIGHT SIDEBAR (Scrolls independently) */}
+        <div
+          className={`lg:col-span-2 space-y-4 pr-1 ${scrollableColumnClass}`}
+        >
           <div className="bg-color1 border border-color1 rounded-xl pb-3 min-h-48">
             <div className="h-12 border-b border-color1 p-2 flex items-center">
               <p className="text-lg font-bold">Suggested for you</p>
