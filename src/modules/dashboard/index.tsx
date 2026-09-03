@@ -17,10 +17,8 @@ import {
 const Dashboard = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // State to track the currently active/hovered top nav tab
   const [activeTab, setActiveTab] = useState("Dashboard-0");
 
-  // Mouse drag to scroll states
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeftState, setScrollLeftState] = useState(0);
@@ -361,7 +359,7 @@ const Dashboard = () => {
                   />
                 </div>
                 <div className="w-32 sm:w-40 h-36 sm:h-44 bg-[#FF7DCD] absolute top-2 z-15 rounded-full opacity-80 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"></div>
-                <div className="w-32 sm:w-40 h-32 sm:h-40 bg-[#E4F2FF] absolute -bottom-4 sm:-bottom-35 left-10 sm:left-20 rounded-[60px] opacity-80 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"></div>
+                <div className="w-32 sm:w-40 h-32 sm:h-40 bg-[#E4F2FF] absolute -bottom-4 sm:-bottom-35 left-5 sm:left-5 rounded-[60px] opacity-80 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"></div>
               </div>
             </div>
           </div>
@@ -375,23 +373,26 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Featured Appointment Item */}
-            <div className="flex flex-col sm:flex-row justify-between bg-[#C9C9CD] p-3 sm:px-2 sm:h-14 rounded-2xl sm:rounded-4xl items-center gap-3 transition-all duration-200 hover:bg-[#b8b8bc] hover:shadow-md cursor-pointer hover:-translate-y-0.5">
-              <div className="flex items-center gap-3 w-full sm:w-auto">
+            {/* Featured Appointment Item (Overflow Fixed) */}
+            <div className="flex flex-col sm:flex-row justify-between bg-[#C9C9CD] p-3 sm:px-3 sm:py-2 min-h-14 rounded-2xl sm:rounded-full items-center gap-2 sm:gap-3 transition-all duration-200 hover:bg-[#b8b8bc] hover:shadow-md cursor-pointer hover:-translate-y-0.5">
+              <div className="flex items-center gap-3 w-full sm:w-auto shrink-0">
                 <div className="h-10 w-10 rounded-full bg-[#0A0332] flex justify-center items-center shrink-0 transition-transform duration-200 hover:scale-110">
                   <Icon
                     icon="qlementine-icons:camera-16"
                     className="text-white text-xl"
                   />
                 </div>
-                <div className="sm:hidden">
-                  <p className="font-bold text-sm">Mr. Godfred Kusi (mentor)</p>
-                  <p className="text-xs text-[#656565]">
+                <div className="sm:hidden min-w-0 flex-1">
+                  <p className="font-bold text-sm truncate">
+                    Mr. Godfred Kusi (mentor)
+                  </p>
+                  <p className="text-xs text-[#656565] truncate">
                     You recently reacted on his post
                   </p>
                 </div>
               </div>
-              <div className="hidden sm:block w-full">
+
+              <div className="hidden sm:block min-w-0 flex-1">
                 <p className="font-bold text-sm truncate">
                   Mr. Godfred Kusi (mentor)
                 </p>
@@ -399,26 +400,24 @@ const Dashboard = () => {
                   You recently reacted on his post/view or read book
                 </p>
               </div>
-              <AvatarGroup className="w-full sm:w-auto justify-center sm:justify-start">
-                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 transition-transform duration-200 hover:scale-110 hover:z-50">
+
+              <AvatarGroup className="w-full sm:w-auto justify-center sm:justify-start shrink-0">
+                <Avatar className="h-8 w-8 transition-transform duration-200 hover:scale-110 hover:z-50">
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 transition-transform duration-200 hover:scale-110 hover:z-50">
+                <Avatar className="h-8 w-8 transition-transform duration-200 hover:scale-110 hover:z-50">
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 transition-transform duration-200 hover:scale-110 hover:z-50">
+                <Avatar className="h-8 w-8 transition-transform duration-200 hover:scale-110 hover:z-50">
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <AvatarGroupCount>+4</AvatarGroupCount>
               </AvatarGroup>
-              <Button
-                className={
-                  "bg-[#FF9001] hover:bg-[#e07f00] py-3 sm:py-5 rounded-full w-full sm:w-auto shrink-0 font-bold transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-95"
-                }
-              >
+
+              <Button className="bg-[#FF9001] hover:bg-[#e07f00] h-9 px-4 rounded-full w-full sm:w-auto shrink-0 font-bold text-xs sm:text-sm text-white whitespace-nowrap transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-95">
                 Join Lesson
               </Button>
             </div>

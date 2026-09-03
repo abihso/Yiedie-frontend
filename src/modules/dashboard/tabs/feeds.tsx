@@ -19,6 +19,7 @@ import ThreeDotsIcon from "@iconify-react/bi/three-dots";
 import RepostIcon from "@iconify-react/hugeicons/repost";
 import SaveAddIcon from "@iconify-react/reicon/save-add";
 import ShareOutlineIcon from "@iconify-react/cuida/share-outline";
+import SearchIcon from "@iconify-react/glyphs/search";
 
 import {
   Select,
@@ -47,12 +48,11 @@ const Feeds = () => {
     "h-full overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden";
 
   return (
-    // Fixed viewport container to prevent overall window scrolling
     <div className="h-screen flex flex-col p-2 sm:p-4 overflow-hidden">
-      {/* Fixed Header */}
+      {/*  Header */}
       <div className="relative flex flex-col sm:flex-row justify-center items-center gap-2 mb-3 shrink-0">
         <p className="static sm:absolute sm:left-3 font-bold text-lg">Feeds</p>
-        <div className="flex gap-4 sm:gap-2">
+        <div className="flex gap-10 sm:gap-15">
           {["For you", "Following", "Latest", "Live"].map((tab) => (
             <p
               key={tab}
@@ -96,7 +96,7 @@ const Feeds = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center gap-3 items-center h-10 px-2">
+              <div className="flex justify-center gap-10 items-center h-10 px-2">
                 <div className="flex flex-col items-center cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-95">
                   <p className="font-extrabold text-[10px]">20</p>
                   <p className="text-[10px] font-light">Post</p>
@@ -305,7 +305,7 @@ const Feeds = () => {
                   </div>
                 )}
 
-                <div className="h-10 flex flex-wrap gap-4 sm:gap-6 items-center">
+                <div className="h-10 flex flex-wrap gap-4 sm:gap-14 items-center">
                   <div className="flex gap-1.5 items-center cursor-pointer group transition-transform duration-200 hover:-translate-y-0.5 active:scale-90">
                     <LikeIcon
                       height="1em"
@@ -379,6 +379,26 @@ const Feeds = () => {
         <div
           className={`lg:col-span-2 space-y-4 pr-1 ${scrollableColumnClass}`}
         >
+          {/* Search Bar Block */}
+          <div className="rounded-2xl mt-1 ml-0.5 h-10 sm:h-12 relative transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 focus-within:ring-2 focus-within:ring-[#1900FF]/40 focus-within:shadow-md focus-within:-translate-y-0.5 group cursor-pointer">
+            <SearchIcon className="absolute top-2.5 sm:top-3 left-3 h-5 w-5 sm:h-6 sm:w-6 text-gray-500 transition-transform duration-200 group-hover:scale-110 group-focus-within:scale-110 group-focus-within:text-[#1900FF]" />
+            <input
+              type="text"
+              placeholder="search something"
+              className="bg-color3 h-full w-full rounded-2xl text-xs pl-9 sm:pl-10 pr-3 sm:pr-4 outline-none transition-all duration-200 focus:bg-white dark:focus:bg-black/20 cursor-text"
+            />
+          </div>
+
+          {/* Subscribe to Premium Banner Block */}
+          <div className="h-32 overflow-hidden rounded-2xl px-4 py-3 bg-color2 cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] group">
+            <p className="text-white font-bold transition-transform duration-200 group-hover:translate-x-0.5">
+              Subscribe to Premium
+            </p>
+            <p className="text-xs text-white/90 mt-1 line-clamp-3">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+              consectetur, doloremque perspiciatis suscipit id nostrum
+            </p>
+          </div>
           <div className="bg-color1 border border-color1 rounded-xl pb-3 min-h-48">
             <div className="h-12 border-b border-color1 p-2 flex items-center">
               <p className="text-lg font-bold">Suggested for you</p>
