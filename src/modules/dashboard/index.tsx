@@ -253,7 +253,11 @@ const Dashboard = () => {
             },
             { icon: "reicon:save", label: "Saved" },
             { divider: true },
-            { icon: "mage:message-round", label: "Message" },
+            {
+              icon: "mage:message-round",
+              label: "Message",
+              link: "/dashboard/messages",
+            },
             { icon: "arcticons:google-journal", label: "My Journals" },
             { icon: "grommet-icons:resources", label: "Resources" },
             { divider: true },
